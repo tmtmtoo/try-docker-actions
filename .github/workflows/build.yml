@@ -19,4 +19,4 @@ jobs:
           tags: try-docker-actions:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - run: docker run -rm try-docker-actions:latest
+      - run: docker run --rm try-docker-actions:latest
