@@ -17,7 +17,8 @@ jobs:
           file: Dockerfile
           push: false
           tags: try-docker-actions:latest
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - run: docker image ls
+      - run: docker image ls | grep try-docker-actions
       - run: docker run --rm try-docker-actions:latest
