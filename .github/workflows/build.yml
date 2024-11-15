@@ -42,12 +42,16 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:test-image
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - run: docker run --rm ghcr.io/${{ github.repository }}:test-image
 
   test:
     runs-on: ubuntu-latest
     needs: docker-build
     permissions:
       packages: read
+    services:
+      my_service:
+        image: ghcr.io/${{ github.repository }}:test-image
+        ports:
+          - 8081:8081
     steps:
-      - run: docker run --rm ghcr.io/${{ github.repository }}:test-image
+      - run: curl localhost:8081

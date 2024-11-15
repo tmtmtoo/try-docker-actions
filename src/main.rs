@@ -1,5 +1,10 @@
 #[tokio::main]
 async fn main() {
-    let _ = tokio::time::sleep(tokio::time::Duration::from_millis(1000)).await;
-    println!("Hello, world!!!!!!");
+    let app = axum::Router::new().route("/", axum::routing::get(root));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8081").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+
+async fn root() -> &'static str {
+    "Hello, World!"
 }

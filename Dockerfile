@@ -13,7 +13,7 @@ cargo build --locked --release
 cp ./target/release/try-docker-actions /bin/app
 EOF
 
-FROM debian:bookworm-slim
+FROM debian:bookworm-slim AS runner
 RUN adduser \
   --disabled-password \
   --gecos "" \
