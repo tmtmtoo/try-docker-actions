@@ -40,6 +40,7 @@ jobs:
           file: Dockerfile
           push: true
           platforms: linux/amd64
+          provenance: false
           tags: ghcr.io/${{ github.repository }}:test-image
           cache-from: type=gha
           cache-to: type=gha,mode=max
