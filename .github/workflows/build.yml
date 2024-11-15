@@ -39,12 +39,13 @@ jobs:
           context: .
           file: Dockerfile
           push: true
+          load: true
           platforms: linux/amd64
           provenance: false
           tags: ghcr.io/${{ github.repository }}:test-image
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - run: echo "SOME_ENV_VAR=dynamic_value" >> $GITHUB_ENV
+      - run: docker run --rm ghcr.io/${{ github.repository }}:test-image pwd
 
   test:
     runs-on: ubuntu-latest
