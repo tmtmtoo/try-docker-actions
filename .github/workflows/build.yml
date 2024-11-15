@@ -53,6 +53,8 @@ jobs:
     services:
       my_service:
         image: ghcr.io/${{ github.repository }}:test-image
+        env:
+          FOO: bar
         ports:
           - 8081:8081
     steps:

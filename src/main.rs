@@ -5,6 +5,7 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn root() -> &'static str {
-    "Hello, World!"
+async fn root() -> String {
+    let foo = std::env::var("FOO").unwrap_or_else(|_| "foo".into());
+    format!("Hello, World! {foo}")
 }
