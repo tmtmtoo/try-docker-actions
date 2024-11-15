@@ -69,9 +69,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.repository }}:test-image-alt
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:test-image
+      - run: |
+          docker pull ghcr.io/${{ github.repository }}:test-image
+          docker tag ghcr.io/${{ github.repository }}:test-image ghcr.io/${{ github.repository }}:test-image-alt
+          docker push ghcr.io/${{ github.repository }}:test-image-alt
