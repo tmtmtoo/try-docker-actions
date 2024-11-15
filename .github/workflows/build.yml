@@ -44,6 +44,7 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:test-image
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - run: echo "SOME_ENV_VAR=dynamic_value" >> $GITHUB_ENV
 
   test:
     runs-on: ubuntu-latest
@@ -54,7 +55,7 @@ jobs:
       my_service:
         image: ghcr.io/${{ github.repository }}:test-image
         env:
-          FOO: bar
+          FOO: ${{ env.SOME_ENV_VAR }}
         ports:
           - 8081:8081
     steps:
