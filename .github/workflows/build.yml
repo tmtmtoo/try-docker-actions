@@ -7,9 +7,10 @@ on:
       - main
 
 jobs:
-  docker-build:
+  build:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       packages: write
     steps:
       - uses: actions/checkout@v4
@@ -39,30 +40,23 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          load: true
           platforms: linux/amd64
           provenance: false
           tags: ghcr.io/${{ github.repository }}:test-image
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - run: docker run --rm ghcr.io/${{ github.repository }}:test-image pwd
 
   test:
     runs-on: ubuntu-latest
     needs: docker-build
     permissions:
       packages: read
-    services:
-      my_service:
-        image: ghcr.io/${{ github.repository }}:test-image
-        env:
-          FOO: ${{ env.SOME_ENV_VAR }}
-        ports:
-          - 8081:8081
     steps:
+      - run: docker run -d --rm --name test-image -p 8081:8081 ghcr.io/${{ github.repository }}:test-image
       - run: curl localhost:8081
+      - run: docker container stop test-image
 
-  repush:
+  push:
     runs-on: ubuntu-latest
     needs: docker-build
     permissions:
@@ -75,5 +69,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           docker pull ghcr.io/${{ github.repository }}:test-image
-          docker tag ghcr.io/${{ github.repository }}:test-image ghcr.io/${{ github.repository }}:test-image-alt
-          docker push ghcr.io/${{ github.repository }}:test-image-alt
+          docker tag ghcr.io/${{ github.repository }}:test-image ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/${{ github.repository }}:latest
