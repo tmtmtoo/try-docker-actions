@@ -7,5 +7,5 @@ async fn main() {
 
 async fn root() -> String {
     let foo = std::env::var("FOO").unwrap_or_else(|_| "foo".into());
-    format!("Hello, World! {foo}")
+    format!("Hello, World!! {foo}")
 }
