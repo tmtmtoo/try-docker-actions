@@ -52,7 +52,9 @@ jobs:
     permissions:
       packages: read
     steps:
-      - run: docker run -d --rm --name test-image -p 8081:8081 ghcr.io/${{ github.repository }}:test-image
+      - run: |
+          docker container run -d --rm --name test-image -p 8081:8081 \
+            ghcr.io/${{ github.repository }}:test-image
       - run: |
           actual=$(curl localhost:8081 | grep 'Hello, World' | wc -l)
           [[ $actual -ne 0 ]]
@@ -69,9 +71,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          docker pull ghcr.io/${{ github.repository }}:test-image
-          docker tag ghcr.io/${{ github.repository }}:test-image ghcr.io/${{ github.repository }}:latest
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker image pull ghcr.io/${{ github.repository }}:test-image
+          docker image tag ghcr.io/${{ github.repository }}:test-image ghcr.io/${{ github.repository }}:latest
+          docker image push ghcr.io/${{ github.repository }}:latest
 
   prune:
     runs-on: ubuntu-latest
