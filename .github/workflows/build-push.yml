@@ -28,8 +28,8 @@ jobs:
           platforms: linux/amd64
           provenance: false
           tags: ghcr.io/${{ github.repository }}:test-image
-          cache-from: type=registory,ref=ghcr.io/${{ github.repository }}:test-image-cache
-          cache-to: type=registory,ref=ghcr.io/${{ github.repository }}:test-image-cache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:test-image-cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:test-image-cache,mode=max
 
   test:
     runs-on: ubuntu-latest
