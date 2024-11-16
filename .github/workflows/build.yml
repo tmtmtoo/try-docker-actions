@@ -48,7 +48,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: docker-build
+    needs: build
     permissions:
       packages: read
     steps:
@@ -58,7 +58,7 @@ jobs:
 
   push:
     runs-on: ubuntu-latest
-    needs: docker-build
+    needs: test
     permissions:
       packages: write
     steps:
