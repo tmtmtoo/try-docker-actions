@@ -12,6 +12,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           user: ${{ github.actor }}
           container: try-docker-actions
-          keep-younger-than: 1
           keep-last: 2
           prune-untagged: true
