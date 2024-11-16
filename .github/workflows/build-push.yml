@@ -82,5 +82,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           user: ${{ github.actor }}
           container: try-docker-actions
-          keep-last: 1
           prune-untagged: true
