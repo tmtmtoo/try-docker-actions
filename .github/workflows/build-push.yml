@@ -55,7 +55,7 @@ jobs:
       - run: docker run -d --rm --name test-image -p 8081:8081 ghcr.io/${{ github.repository }}:test-image
       - run: |
           actual=$(curl localhost:8081 | grep 'Hello, World' | wc -l)
-          [[ $actual -gt 0 ]] && exit 1
+          [[ $actual -eq 0 ]] && exit 1
 
   push:
     runs-on: ubuntu-latest
