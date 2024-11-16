@@ -2,10 +2,15 @@ name: Prune
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   prune:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - uses: vlaurin/action-ghcr-prune@v0.6.0
         with:
