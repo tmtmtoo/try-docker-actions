@@ -1,4 +1,4 @@
-name: Build docker image
+name: Build and push
 
 on:
   workflow_dispatch:
@@ -54,7 +54,6 @@ jobs:
     steps:
       - run: docker run -d --rm --name test-image -p 8081:8081 ghcr.io/${{ github.repository }}:test-image
       - run: curl localhost:8081
-      - run: docker container stop test-image
 
   push:
     runs-on: ubuntu-latest
