@@ -70,3 +70,17 @@ jobs:
           docker pull ghcr.io/${{ github.repository }}:test-image
           docker tag ghcr.io/${{ github.repository }}:test-image ghcr.io/${{ github.repository }}:latest
           docker push ghcr.io/${{ github.repository }}:latest
+
+  prune:
+    runs-on: ubuntu-latest
+    needs: push
+    permissions:
+      packages: write
+    steps:
+      - uses: vlaurin/action-ghcr-prune@v0.6.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          user: ${{ github.actor }}
+          container: try-docker-actions
+          keep-last: 2
+          prune-untagged: true
